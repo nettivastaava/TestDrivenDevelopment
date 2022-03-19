@@ -49,7 +49,7 @@ export class Board {
 
   tick() {
     for (var i=0;i<this.height-1;i++) {
-      if (this.board[i][1] !== '.') {
+      if (this.board[i][1] !== '.' && this.board[i+1][1] === '.') {
         this.board[i+1][1]=this.board[i][1];
         this.board[i][1]='.';
         return;
