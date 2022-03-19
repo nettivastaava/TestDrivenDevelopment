@@ -2,10 +2,12 @@ export class Board {
   width;
   height;
   board;
+  movingAllowed;
 
   constructor(width, height) {
     this.width = width;
     this.height = height;
+    this.movingAllowed = true;
 
     this.board = new Array(this.height)
 
@@ -43,13 +45,19 @@ export class Board {
   }
 
   tick() {
-    console.log('TICK');
     for (var i=0;i<this.height-1;i++) {
       if (this.board[i][1] === 'X') {
         this.board[i][1]='.';
         this.board[i+1][1]='X';
-        break;
+        return;
       }
     }
+    if (this.board[this.height-1][1] === 'X') {
+      this.movingAllowed = false;
+    }
+  }
+
+  hasFalling() {
+    return this.movingAllowed;
   }
 }
