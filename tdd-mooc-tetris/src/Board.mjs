@@ -1,3 +1,5 @@
+import { Block } from "./Block.mjs";
+
 export class Board {
   width;
   height;
@@ -32,8 +34,8 @@ export class Board {
     return boardRepresentation;
   }
 
-  drop() {
-    for (var i=0;i<this.height;i++) {
+  drop(Block) {
+    for (var i=0;i<this.height-1;i++) {
       for (var j=0;j<this.width;j++) {
         if (this.board[i][j]!=='.') {
           throw 'already falling';
@@ -41,14 +43,15 @@ export class Board {
       }
     }
 
-    this.board[0][1] = 'X';
+    this.movingAllowed = true;
+    this.board[0][1] = Block.color;
   }
 
   tick() {
     for (var i=0;i<this.height-1;i++) {
-      if (this.board[i][1] === 'X') {
+      if (this.board[i][1] !== '.') {
+        this.board[i+1][1]=this.board[i][1];
         this.board[i][1]='.';
-        this.board[i+1][1]='X';
         return;
       }
     }
