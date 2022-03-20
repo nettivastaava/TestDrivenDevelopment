@@ -18,7 +18,7 @@ export class Board {
       for (var j=0;j<this.width;j++) {
        this.board[i][j]='.';
       }
-     }
+    }
   }
 
   toString() {
