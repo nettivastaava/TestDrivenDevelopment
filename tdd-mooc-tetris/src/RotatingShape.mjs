@@ -1,6 +1,7 @@
 export class RotatingShape {
   shape;
   size;
+  initShape;
 
   constructor(shape) {
     var characters = shape.split("");
@@ -30,6 +31,7 @@ export class RotatingShape {
         charIndex++;
       }
     }
+    this.initShape=this.shape;
   }
 
   toString() {
@@ -41,24 +43,44 @@ export class RotatingShape {
        }
        shapeRepresentation += '\n';
     }
+    this.shape=this.initShape;
+
     return shapeRepresentation;
   }
 
-  rotateRight() {
-    var newShape = new Array(this.size);
+  newArray() {
+    var newArray = new Array(this.size);
 
     for (var i=0;i<this.size;i++) {
-      newShape[i]=new Array();
+      newArray[i]=new Array();
     }
+
+    return newArray;
+  }
+
+  rotateRight() {
+    var newShape = this.newArray();
 
     for (var i=0, a=this.size-1;i<this.size && a>=0;i++, a--) {
       for (var j=0, b=0;j<this.size && b<this.size;j++, b++) {
         newShape[b][a]=this.shape[i][j];
       }
     }
+    this.shape=newShape;
+    return this.toString();
+  }
+
+  rotateLeft() {
+    var newShape = this.newArray();
+
+    for (var i=0, a=0;i<this.size && a<this.size;i++, a++) {
+      for (var j=0, b=this.size-1;j<this.size && b>=0;j++, b--) {
+        newShape[b][a]=this.shape[i][j];
+        console.log('new ', newShape[b][a]);
+      }
+    }
 
     this.shape=newShape;
     return this.toString();
-
   }
 }
