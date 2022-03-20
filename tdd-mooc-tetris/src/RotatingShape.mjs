@@ -1,7 +1,6 @@
 export class RotatingShape {
   shape;
   size;
-  initShape;
 
   constructor(shape) {
     var characters = shape.split("");
@@ -31,7 +30,6 @@ export class RotatingShape {
         charIndex++;
       }
     }
-    this.initShape=this.shape;
   }
 
   toString() {
@@ -43,44 +41,31 @@ export class RotatingShape {
        }
        shapeRepresentation += '\n';
     }
-    this.shape=this.initShape;
 
     return shapeRepresentation;
   }
 
-  newArray() {
-    var newArray = new Array(this.size);
+  rotateRight() {
+    var newCharSet = '';
 
     for (var i=0;i<this.size;i++) {
-      newArray[i]=new Array();
-    }
-
-    return newArray;
-  }
-
-  rotateRight() {
-    var newShape = this.newArray();
-
-    for (var i=0, a=this.size-1;i<this.size && a>=0;i++, a--) {
-      for (var j=0, b=0;j<this.size && b<this.size;j++, b++) {
-        newShape[b][a]=this.shape[i][j];
+      for (var j=this.size-1;j>=0;j--) {
+        newCharSet+=this.shape[j][i];
       }
+      newCharSet+=' ';
     }
-    this.shape=newShape;
-    return this.toString();
+    return new RotatingShape(newCharSet);
   }
 
   rotateLeft() {
-    var newShape = this.newArray();
+    var newCharSet = '';
 
-    for (var i=0, a=0;i<this.size && a<this.size;i++, a++) {
-      for (var j=0, b=this.size-1;j<this.size && b>=0;j++, b--) {
-        newShape[b][a]=this.shape[i][j];
-        console.log('new ', newShape[b][a]);
+    for (var i=this.size-1;i>=0;i--) {
+      for (var j=0;j<this.size;j++) {
+        newCharSet+=this.shape[j][i];
       }
+      newCharSet+=' ';
     }
-
-    this.shape=newShape;
-    return this.toString();
+    return new RotatingShape(newCharSet);
   }
 }
