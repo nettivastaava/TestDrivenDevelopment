@@ -7,7 +7,7 @@ export class RotatingShape {
     var length = 0;
     var charSet = '';
     for (var i=0;i<characters.length;i++) {
-      if (characters[i].match(/[a-z]/i)) {
+      if (characters[i].match(/^\s+$/) === null) {
         length++;
         charSet+=characters[i];
       }
