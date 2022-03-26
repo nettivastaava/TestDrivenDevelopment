@@ -48,6 +48,10 @@ export class RotatingShape {
   rotateRight() {
     var newCharSet = '';
 
+    if (this.checkOShape()) {
+      return this.rotateO();
+    }
+
     for (var i=0;i<this.size;i++) {
       for (var j=this.size-1;j>=0;j--) {
         newCharSet+=this.shape[j][i];
@@ -57,7 +61,7 @@ export class RotatingShape {
     return new RotatingShape(newCharSet);
   }
 
-  checkShape() {
+  checkIShape() {
     if (this.size < 5) {
       return false;
     }
@@ -70,6 +74,19 @@ export class RotatingShape {
 
     return true;
     
+  }
+
+  checkOShape() {
+    if (this.size > 3) {
+      return false;
+    }
+    console.log('THIS SHAPE IS ', this.shape);
+    for (var i=0;i<this.size-1;i++) {
+      if (this.shape[0][i]==='O') {
+        return true;
+      }
+    }
+    return false;
   }
 
   rotateLeftI() {
@@ -85,11 +102,27 @@ export class RotatingShape {
     return new RotatingShape(newCharSet);
   }
 
+  rotateO() {
+    var newCharSet = '';
+    console.log('THIS ', this.shape)
+
+    for (var i=0;i<this.size;i++) {
+      for (var j=0;j<this.size;j++) {
+        newCharSet+=this.shape[i][j];
+      }
+      newCharSet+=' ';
+    }
+    return new RotatingShape(newCharSet);
+  }
+
   rotateLeft() {
     var newCharSet = '';
 
-    if (this.checkShape()) {
+    if (this.checkIShape()) {
       return this.rotateLeftI();
+    } else if (this.checkOShape()) {
+      console.log('IS O SHAPE');
+      return this.rotateO();
     }
 
     for (var i=this.size-1;i>=0;i--) {
