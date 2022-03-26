@@ -57,8 +57,40 @@ export class RotatingShape {
     return new RotatingShape(newCharSet);
   }
 
+  checkShape() {
+    if (this.size < 5) {
+      return false;
+    }
+    var i=0;
+    for (var j=0;j<this.size-1;j++) {
+      if (this.shape[i][j]!=='.') {
+        return false;
+      }
+    }
+
+    return true;
+    
+  }
+
+  rotateLeftI() {
+    var newCharSet = '';
+
+    for (var i=this.size-2;i>=0;i--) {
+      for (var j=0;j<this.size-1;j++) {
+        newCharSet+=this.shape[j][i];
+      }
+      newCharSet+=' .';
+    }
+    newCharSet+=' .....';
+    return new RotatingShape(newCharSet);
+  }
+
   rotateLeft() {
     var newCharSet = '';
+
+    if (this.checkShape()) {
+      return this.rotateLeftI();
+    }
 
     for (var i=this.size-1;i>=0;i--) {
       for (var j=0;j<this.size;j++) {
