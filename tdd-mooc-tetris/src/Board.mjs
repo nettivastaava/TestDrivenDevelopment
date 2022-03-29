@@ -43,8 +43,16 @@ export class Board {
       }
     }
 
-    this.movingAllowed = true;
-    this.board[0][1] = Block.color;
+    if (Block.color) {
+      this.movingAllowed = true;
+      this.board[0][1] = Block.color;
+    } else if (Block.shape) {
+      for (var i=0;i<2;i++) {
+        for (var j=3;j<6;j++) {
+          this.board[i][j]=Block.shape[i][j-3];
+        }
+      }
+    }
   }
 
   tick() {

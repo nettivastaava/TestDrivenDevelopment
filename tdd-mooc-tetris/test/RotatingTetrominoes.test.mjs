@@ -12,7 +12,6 @@ function distinctOrientations(shape) {
     goingLeft = goingLeft.rotateLeft();
   }
 
-  console.log('DISTINCT ', distinct)
   return distinct;
 }
 
