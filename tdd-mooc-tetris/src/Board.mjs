@@ -47,6 +47,7 @@ export class Board {
       this.movingAllowed = true;
       this.board[0][1] = Block.color;
     } else if (Block.shape) {
+      this.movingAllowed = true;
       for (var i=0;i<2;i++) {
         for (var j=3;j<6;j++) {
           this.board[i][j]=Block.shape[i][j-3];
@@ -56,14 +57,18 @@ export class Board {
   }
 
   tick() {
-    for (var i=0;i<this.height-1;i++) {
-      if (this.board[i][1] !== '.' && this.board[i+1][1] === '.') {
-        this.board[i+1][1]=this.board[i][1];
-        this.board[i][1]='.';
-        return;
+    var moved = false;
+    for (var i=this.height-2;i>=0;i--) {
+      for (var j=0;j<this.width;j++) {
+        if (this.board[i][j]!=='.' && this.board[i+1][j]==='.') {
+          this.board[i+1][j]=this.board[i][j];
+          this.board[i][j]='.'
+          moved=true;
+        }
       }
     }
-    if (this.board[this.height-1][1] === 'X') {
+    
+    if (!moved && this.board[this.height-1][1] === 'X') {
       this.movingAllowed = false;
     }
   }
