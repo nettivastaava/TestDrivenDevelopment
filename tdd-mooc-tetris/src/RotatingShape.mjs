@@ -45,12 +45,30 @@ export class RotatingShape {
     return shapeRepresentation;
   }
 
-  rotateRight() {
-    var newCharSet = '';
-
-    if (this.checkOShape()) {
-      return this.rotateO();
+  rotateI() {
+    for (var i=0;i<this.size;i++) {
+      for (var j=0;j<this.size-1;j++) {
+        if (this.shape[i][j]==='I' && this.shape[i][j]===this.shape[i][j+1]) {
+          return (
+            new RotatingShape(`..I.. ..I.. ..I.. ..I.. .....`)
+          )
+        }
+      }
     }
+
+
+
+    return this.returnCurrentShape()
+  }
+
+  rotateRight() {
+    if (this.checkOShape()) {
+      return this.returnCurrentShape();
+    } else if (this.checkIShape()) {
+      return this.rotateI()
+    }
+
+    var newCharSet = '';
 
     for (var i=0;i<this.size;i++) {
       for (var j=this.size-1;j>=0;j--) {
@@ -65,14 +83,18 @@ export class RotatingShape {
     if (this.size < 5) {
       return false;
     }
-    var i=0;
-    for (var j=0;j<this.size-1;j++) {
-      if (this.shape[i][j]!=='.') {
-        return false;
+
+    var numOfI = 0;
+
+    for (var i=0;i<this.size;i++) {
+      for (var j=0;j<this.size && numOfI<2;j++) {
+        if (this.shape[i][j]==='I') {
+          numOfI++
+        }
       }
     }
 
-    return true;
+    return numOfI>=2;
     
   }
 
@@ -80,7 +102,7 @@ export class RotatingShape {
     if (this.size > 3) {
       return false;
     }
-    console.log('THIS SHAPE IS ', this.shape);
+
     for (var i=0;i<this.size-1;i++) {
       if (this.shape[0][i]==='O') {
         return true;
@@ -89,22 +111,8 @@ export class RotatingShape {
     return false;
   }
 
-  rotateLeftI() {
+  returnCurrentShape() {
     var newCharSet = '';
-
-    for (var i=this.size-2;i>=0;i--) {
-      for (var j=0;j<this.size-1;j++) {
-        newCharSet+=this.shape[j][i];
-      }
-      newCharSet+=' .';
-    }
-    newCharSet+=' .....';
-    return new RotatingShape(newCharSet);
-  }
-
-  rotateO() {
-    var newCharSet = '';
-    console.log('THIS ', this.shape)
 
     for (var i=0;i<this.size;i++) {
       for (var j=0;j<this.size;j++) {
@@ -116,14 +124,13 @@ export class RotatingShape {
   }
 
   rotateLeft() {
-    var newCharSet = '';
-
     if (this.checkIShape()) {
-      return this.rotateLeftI();
+      return this.rotateI();
     } else if (this.checkOShape()) {
-      console.log('IS O SHAPE');
-      return this.rotateO();
+      return this.returnCurrentShape();
     }
+
+    var newCharSet = '';
 
     for (var i=this.size-1;i>=0;i--) {
       for (var j=0;j<this.size;j++) {
