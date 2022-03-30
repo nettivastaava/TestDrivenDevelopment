@@ -63,6 +63,16 @@ export class Board {
     }
   }
 
+  moveRight() {
+    if (this.movingAllowed) {
+      for (var i=this.height-1;i>=0;i--) {
+        for (var j=this.width;j>0;j--) {
+          this.board[i][j]=this.board[i][j-1];
+        }
+      }
+    }
+  }
+
   tick() {
     var moved = false;
     for (var i=this.height-2;i>=0;i--) {
