@@ -27,5 +27,17 @@ describe("Moving falling tetrominoes", () => {
        ..........`
     );
   });
+
+  it("move right", () => {
+    board.moveRight();
+    expect(board.toString()).to.equalShape(
+      `.....T....
+       ....TTT...
+       ..........
+       ..........
+       ..........
+       ..........`
+    );
+  });
 });
   
