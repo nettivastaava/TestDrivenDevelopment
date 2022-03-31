@@ -9,6 +9,12 @@ function fallToBottom(board) {
   }
 }
 
+function moveToLeftEdge(board) {
+  for (let i=0;i<10;i++) {
+    board.moveLeft();
+  }
+}
+
 describe("Moving falling tetrominoes", () => {
   let board;
   beforeEach(() => {
@@ -51,5 +57,17 @@ describe("Moving falling tetrominoes", () => {
        ..........`
     );
   });
+
+  it("cannot go left beyond the board", () => {
+    board.moveToLeftEdge();
+    expect(board.toString()).to.equalShape(
+      `.T........
+       TTT.......
+       ..........
+       ..........
+       ..........
+       ..........`
+    );
+  })
 });
   
