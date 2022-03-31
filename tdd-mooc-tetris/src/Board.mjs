@@ -83,6 +83,9 @@ export class Board {
     if (this.movingAllowed) {
       for (var i=this.height-1;i>0;i--) {
         for (var j=0;j<this.width;j++) {
+          if (i===this.height-1 && this.board[i][j]!=='.') {
+            return;
+          }
           this.board[i][j]=this.board[i-1][j];
           this.board[i-1][j]='.';
         }
