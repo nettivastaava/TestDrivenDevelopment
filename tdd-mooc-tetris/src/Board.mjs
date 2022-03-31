@@ -69,7 +69,10 @@ export class Board {
   moveRight() {
     if (this.movingAllowed) {
       for (var i=this.height-1;i>=0;i--) {
-        for (var j=this.width;j>0;j--) {
+        for (var j=this.width-1;j>0;j--) {
+          if (j===this.width-1 && this.board[i][j]!=='.') {
+            return;
+          }
           this.board[i][j]=this.board[i][j-1];
         }
       }
