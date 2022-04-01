@@ -56,11 +56,20 @@ export class Board {
   moveLeft() {
     if (this.movingAllowed) {
       for (var i=this.height-1;i>=0;i--) {
+        var moved = false;
+        var rowWithBlocks = false;
         for (var j=0;j<this.width-1;j++) {
-          if (j===0 && this.board[i][j]!=='.') {
-            return;
+          if (this.board[i][j]==='.' && this.board[i][j+1]!=='.') {
+            this.board[i][j]=this.board[i][j+1];
+            this.board[i][j+1]='.';
+            moved = true;
+          } else if (this.board[i][j]!=='.') {
+            rowWithBlocks=true;
           }
-          this.board[i][j]=this.board[i][j+1];
+        }
+        if (!moved && rowWithBlocks) {
+          this.movingAllowed=false;
+          return;
         }
       }
     }
