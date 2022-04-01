@@ -111,7 +111,18 @@ describe("Moving falling tetrominoes", () => {
        ..........`
     );
   })
-
-  
+  it("cannot go right beyond other blocks", () => {
+    moveToRightEdge(board);
+    board.drop(Tetromino.T_SHAPE);
+    moveToRightEdge(board);
+    expect(board.toString()).to.equalShape(
+      `.....T..T.
+       ....TTTTTT
+       ..........
+       ..........
+       ..........
+       ..........`
+    );
+  })
 });
   
