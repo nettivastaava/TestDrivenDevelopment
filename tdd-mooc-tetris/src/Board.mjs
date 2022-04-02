@@ -76,13 +76,26 @@ export class Board {
   }
 
   moveRight() {
+    var rightEdge = this.width-1;
     if (this.movingAllowed) {
       for (var i=this.height-1;i>=0;i--) {
-        for (var j=this.width-1;j>0;j--) {
-          if (j===this.width-1 && this.board[i][j]!=='.') {
-            return;
+        var moved = false;
+        var rowWithBlocks = false;
+        for (var j=rightEdge;j>0;j--) {
+          if (this.board[i][j]==='.' && this.board[i][j-1]!=='.') {
+            this.board[i][j]=this.board[i][j-1];
+            this.board[i][j-1]='.';
+            moved = true;
+          } else if (this.board[i][j]!=='.') {
+            if (this.board[i][j]!=='.' && this.board[i][j-1]!=='.') {
+              rightEdge=j;
+            }
+            rowWithBlocks=true;
           }
-          this.board[i][j]=this.board[i][j-1];
+        }
+        if (!moved && rowWithBlocks) {
+          this.movingAllowed=false;
+          return;
         }
       }
     }
