@@ -101,16 +101,50 @@ export class Board {
     }
   }
 
+  checkLength(row, index) {
+    var endIndex = index;
+    for (var i = index; i < this.width; i++) {
+      if (row[i]!=='.') {
+        endIndex = i;
+      } else {
+        break;
+      }
+    }
+    return endIndex;
+  }
+
+  canFall(row, start, end) {
+    for (var i = start; i <= end; i++) {
+      if (row[i]!=='.') {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   moveDown() {
     if (this.movingAllowed) {
+      var moved = false;
       for (var i=this.height-1;i>0;i--) {
+        var upperRowLastIndex = null;
         for (var j=0;j<this.width;j++) {
-          if (i===this.height-1 && this.board[i][j]!=='.') {
-            return;
+          if (this.board[i][j]==='.' && this.board[i-1][j]!=='.') {
+            upperRowLastIndex=this.checkLength(this.board[i-1], j);
+            if (this.canFall(this.board[i], j, upperRowLastIndex)) {
+              for (var m = j; m <= upperRowLastIndex; m++) {
+                this.board[i][m]=this.board[i-1][m];
+                this.board[i-1][m]='.';
+              }
+              moved=true;
+            }
+            j=upperRowLastIndex;
           }
-          this.board[i][j]=this.board[i-1][j];
-          this.board[i-1][j]='.';
         }
+      }
+      if (!moved) {
+        this.movingAllowed=false;
+        return;
       }
     }
   }
